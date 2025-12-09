@@ -1,0 +1,28 @@
+<launch>
+  <!-- Set robot_description -->
+  <param name="robot_description"
+         command="$(find xacro)/xacro $(find rover_description)/urdf/rover.xacro" />
+
+  <!-- Robot state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+  <!-- Base and arm bridges -->
+  <node pkg="rover_base" type="base_bridge.py" name="base_bridge" output="screen">
+    <param name="port" value="/dev/ttyACM0"/>
+  </node>
+
+  <!-- in rover_bringup/launch/rover_pi.launch -->
+  <node pkg="rover_arm" type="arm_trajectory_executor.py" name="arm_trajectory_executor" output="screen"/>
+  <node pkg="rover_arm" type="arm_homing_supervisor.py" name="arm_homing_supervisor" output="screen"/>
+  <node pkg="rover_arm" type="arm_bridge.py" name="arm_bridge" output="screen">
+    <param name="port" value="/dev/ttyACM1"/>
+  </node>
+
+  <!-- Sensors -->
+  <include file="$(find rover_sensors)/launch/kinect.launch" />
+  <include file="$(find rover_sensors)/launch/gps.launch" />
+
+  <!-- Odometry -->
+  <node pkg="rover_nav" type="odom_node.py" name="odom_node" output="screen"/>
+
+</launch>

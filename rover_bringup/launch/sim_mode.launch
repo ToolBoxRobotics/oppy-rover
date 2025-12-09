@@ -1,0 +1,13 @@
+<launch>
+  <!-- Start Gazebo simulation -->
+  <include file="$(find rover_simulation)/launch/simulation.launch"/>
+
+  <!-- Simulation control bridges -->
+  <node pkg="rover_simulation" type="sim_drive_bridge.py" name="sim_drive_bridge" output="screen"/>
+  <node pkg="rover_simulation" type="sim_arm_bridge.py"  name="sim_arm_bridge"  output="screen"/>
+
+  <!-- Hazard detection + visualizer works in SIM too -->
+  <include file="$(find rover_nav)/launch/hazard_monitor.launch"/>
+
+  <!-- No hardware drivers in simulation -->
+</launch>

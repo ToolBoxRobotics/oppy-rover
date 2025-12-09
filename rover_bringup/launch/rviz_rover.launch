@@ -1,0 +1,15 @@
+<launch>
+  <!-- Load robot description -->
+  <param name="robot_description"
+         command="$(find xacro)/xacro $(find rover_description)/urdf/rover.xacro" />
+
+  <!-- Publish TF based on joint states -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
+
+  <!-- Joint State publisher (sim or real) -->
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" />
+
+  <!-- RViz -->
+  <node pkg="rviz" type="rviz" name="rviz"
+        args="-d $(find rover_bringup)/rviz/rover_full.rviz" />
+</launch>

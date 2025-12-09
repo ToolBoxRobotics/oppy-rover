@@ -1,0 +1,27 @@
+<launch>
+  <!-- Choose mode: real or sim -->
+  <arg name="mode" default="real"/>
+
+  <!-- Common param: robot_description -->
+  <param name="robot_description" command="$(find xacro)/xacro $(find rover_description)/urdf/rover.xacro" />
+
+  <!-- Load state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+
+  <!-- Load TF static transforms (if any) -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_to_map"
+        args="0 0 0 0 0 0 map base_link" />
+
+  <!-- REAL mode -->
+  <group if="$(arg mode) == 'real'">
+    <include file="$(find rover_bringup)/launch/real_mode.launch"/>
+  </group>
+
+  <!-- SIM mode -->
+  <group if="$(arg mode) == 'sim'">
+    <include file="$(find rover_bringup)/launch/sim_mode.launch"/>
+  </group>
+
+  <!-- Always start RViz UI -->
+  <include file="$(find rover_bringup)/launch/rviz_rover.launch"/>
+</launch>
