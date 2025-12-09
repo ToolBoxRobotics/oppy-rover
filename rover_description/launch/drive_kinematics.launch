@@ -1,0 +1,11 @@
+<launch>
+  <node name="six_wheel_kinematics"
+        pkg="rover_description"
+        type="six_wheel_kinematics.py"
+        output="screen"/>
+
+  <node name="teleop_twist_keyboard"
+        pkg="teleop_twist_keyboard"
+        type="teleop_twist_keyboard.py"
+        output="screen"/>
+</launch>
