@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="freenect_launch" type="freenect.launch" name="kinect" output="screen">
+    <param name="publish_tf" value="true" />
+  </node>
+</launch>
