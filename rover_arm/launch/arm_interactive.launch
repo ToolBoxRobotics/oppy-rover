@@ -1,0 +1,10 @@
+<launch>
+  <!-- Make sure MoveIt is running (move_group, planning scene, etc.) -->
+  <!-- Usually from moveit_opportunity_arm demo.launch or a custom bringup -->
+
+  <node pkg="rover_arm" type="arm_interactive_marker.py"
+        name="arm_interactive_marker" output="screen">
+    <param name="group" value="arm" />
+  </node>
+
+</launch>
