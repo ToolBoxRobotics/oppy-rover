@@ -1,0 +1,14 @@
+<launch>
+  <!-- Optional RViz config -->
+  <node pkg="rviz" type="rviz" name="rviz"
+        args="-d $(find rover_bringup)/rviz/opportunity.rviz"/>
+
+  <!-- Teleop -->
+  <include file="$(find rover_teleop)/launch/joy_teleop.launch" />
+
+  <!-- Navigation -->
+  <include file="$(find rover_nav)/launch/move_base.launch" />
+
+  <include file="$(find rover_nav)/launch/hazard_monitor.launch" />
+
+</launch>

@@ -1,0 +1,94 @@
+Panels:
+  - Class: rviz/Displays
+    Name: Displays
+    Help: rviz help...
+  - Class: rviz/Views
+    Name: Views
+  - Class: moveit_rviz_plugin/Planning
+    Name: Motion Planning
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz/RobotModel
+      Enabled: true
+      Name: Robot Model
+      Robot Description: robot_description
+      Visual Enabled: true
+      Collision Enabled: false
+    - Class: rviz/TF
+      Enabled: true
+      Name: TF Frames
+      Show Axes: true
+      Show Names: true
+    - Class: rviz/Path
+      Enabled: true
+      Name: Planned Path
+      Topic: /move_group/display_planned_path
+      Color: 25;255;25
+      Alpha: 0.8
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Name: TrajectoryMarkers
+      Topic: /move_group/display_contacts
+    - Class: rviz/Image
+      Enabled: false
+      Name: RGB Camera
+      Topic: /camera/rgb/image_color
+    - Class: rviz/PointCloud2
+      Enabled: false
+      Name: Depth Cloud
+      Topic: /camera/depth/points
+      Size (Pixels): 2
+    - Class: rviz/Imu
+      Enabled: true
+      Name: IMU
+      Topic: /rover/imu
+      Color: 255;255;0
+      Alpha: 1
+    - Class: rviz/Odometry
+      Enabled: true
+      Name: Odometry
+      Topic: /odom
+      Keep: 200
+      Color: 255;0;0
+    - Class: rviz/Map
+      Enabled: false
+      Name: GlobalMap
+      Topic: /map
+    - Class: rviz/Marker
+      Enabled: false
+      Name: LocalizationMarkers
+      Topic: /visualization_marker
+    - Class: rviz/InteractiveMarkers
+      Enabled: true
+      Name: Arm Interactive Marker
+      Update Topic: /arm_interactive_marker/update
+      Show Axes: true
+      Show Descriptions: true
+      Show Visual Aids: true
+    - classe: rviz/InteractiveMarkers
+      Name: InteractiveMarkers
+      Enabled: true
+      Update Topic: /gripper_interactive_marker/update
+      Show Axes: true
+      Show Visual Aids: true
+    - Class: moveit_rviz_plugin/PlanningScene
+      Name: PlanningScene
+      Enabled: true
+    - Class: moveit_rviz_plugin/Trajectory
+      Name: MoveIt Trajectory
+      Enabled: true
+      Topic: /arm_controller/state
+      Loop Animation: false
+  Fixed Frame: odom
+  Name: root
+  Views:
+    Current:
+      Class: rviz/OrbitCamera
+      Distance: 5.0
+      Focal Point:
+        X: 0.0
+        Y: 0.0
+        Z: 0.5
+      Pitch: 0.5
+      Yaw: 0.5

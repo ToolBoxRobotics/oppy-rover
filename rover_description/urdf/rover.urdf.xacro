@@ -1,0 +1,1151 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"
+       name="mars_opportunity_rover">
+
+
+  <!-- ========================================================= -->
+  <!-- Global Parameters -->
+  <!-- ========================================================= -->
+  <xacro:property name="chassis_length" value="0.75"/>
+  <xacro:property name="chassis_width" value="0.45"/>
+  <xacro:property name="chassis_height" value="0.20"/>
+  <xacro:property name="chassis_mass" value="12.0"/>
+
+  <xacro:property name="wheel_radius"  value="0.065"/>
+  <xacro:property name="wheel_width"  value="0.025"/>
+  <xacro:property name="wheel_mass"  value="1.2"/>
+
+  <xacro:property name="arm_l1"  value="0.12"/>
+  <xacro:property name="arm_l2"  value="0.18"/>
+  <xacro:property name="arm_l3"  value="0.20"/>
+  <xacro:property name="arm_l4"  value="0.15"/>
+  <xacro:property name="arm_l5"  value="0.07"/>
+  <xacro:property name="arm_radius"  value="0.025"/>
+  <xacro:property name="arm_link_mass"  value="1.0"/>
+
+  <xacro:property name="scale_x"  value="0.68"/>
+  <xacro:property name="scale_y"  value="0.68"/>
+  <xacro:property name="scale_z"  value="0.68"/>
+
+  <!-- ================= Mesh Path Parameters ================== -->
+
+  <!-- Mesh Path Parameters - Chassis -->
+  <xacro:property name="chassis_mesh_0" value="package://rover_description/meshes/mesh_0.stl"/>
+  <xacro:property name="wheel_mesh"  value=""/>
+
+
+  <!-- Mesh Path Parameters - Head -->
+  <xacro:property name="head_base_mesh_2" value="package://rover_description/meshes/mesh_2.stl"/>
+  <xacro:property name="head_top_mesh_3" value="package://rover_description/meshes/mesh_3.stl"/>
+
+
+  <!-- Mesh Path Parameters - Solar Panels -->
+  <xacro:property name="panel_left_front_mesh_5" value="package://rover_description/meshes/mesh_5.stl"/>
+  <xacro:property name="panel_left_rear_mesh_6" value="package://rover_description/meshes/mesh_6.stl"/>
+  <xacro:property name="panel_right_front_mesh_7" value="package://rover_description/meshes/mesh_7.stl"/>
+  <xacro:property name="panel_right_rear_mesh_8" value="package://rover_description/meshes/mesh_8.stl"/>
+  <xacro:property name="panel_center_rear_mesh_9" value="package://rover_description/meshes/mesh_9.stl"/>
+
+
+  <!-- Mesh Path Parameters - Robotic Arm -->
+  <xacro:property name="arm_base_mesh_60"  value="ackage://rover_description/meshes/mesh_60.stl"/>
+  <xacro:property name="arm_l1_mesh_61"  value="package://rover_description/meshes/mesh_61.stl"/>
+  <xacro:property name="arm_l2_mesh_62"  value="package://rover_description/meshes/mesh_62.stl"/>
+  <xacro:property name="arm_l3_mesh_63"  value="package://rover_description/meshes/mesh_63.stl"/>
+  <xacro:property name="arm_l4_mesh_64"  value="package://rover_description/meshes/mesh_64.stl"/>
+  <xacro:property name="arm_l5_mesh_65"   value="package://rover_description/meshes/mesh_65.stl"/>
+  <xacro:property name="arm_head_mesh_66"  value="package://rover_description/meshes/mesh_66.stl"/>
+  <xacro:property name="arm_tools_mesh_67"  value="package://rover_description/meshes/mesh_67.stl"/>
+
+
+  <!-- Mesh Path Parameters - Group Steering Left -->
+  <xacro:property name="group_left_chassis_joint_mesh_10"  value="package://rover_description/meshes/mesh_10.stl"/>
+
+  <xacro:property name="group_left_front_suspension_mesh_11"  value="package://rover_description/meshes/mesh_11.stl"/>
+  <xacro:property name="group_left_front_steering_mesh_12"  value="package://rover_description/meshes/mesh_12.stl"/>
+  <xacro:property name="group_left_front_wheel_mesh_13"  value="package://rover_description/meshes/mesh_13.stl"/>
+
+  <xacro:property name="group_left_middle_suspension_mesh_14"  value="package://rover_description/meshes/mesh_14.stl"/>
+  <xacro:property name="group_left_middle_chariot_joint_mesh_15"  value="package://rover_description/meshes/mesh_15.stl"/>
+
+  <xacro:property name="group_left_middle_chariot_center_mesh_16"  value="package://rover_description/meshes/mesh_16.stl"/>
+  <xacro:property name="group_left_middle_chariot_center_wheel_mesh_17"  value="package://rover_description/meshes/mesh_17.stl"/>
+
+  <xacro:property name="group_left_middle_chariot_rear_mesh_18"  value="package://rover_description/meshes/mesh_18.stl"/>
+  <xacro:property name="group_left_middle_chariot_steering_mesh_19"  value="package://rover_description/meshes/mesh_19.stl"/>
+  <xacro:property name="group_left_middle_chariot_wheel_mesh_20"  value="package://rover_description/meshes/mesh_20.stl"/>
+
+
+  <!-- Mesh Path Parameters - Group Steering Right -->
+  <xacro:property name="group_right_chassis_joint_mesh_30"  value="package://rover_description/meshes/mesh_30.stl"/>
+
+  <xacro:property name="group_right_front_suspension_mesh_31"  value="package://rover_description/meshes/mesh_31.stl"/>
+  <xacro:property name="group_right_front_steering_mesh_32"  value="package://rover_description/meshes/mesh_32.stl"/>
+  <xacro:property name="group_right_front_wheel_mesh_33"  value="package://rover_description/meshes/mesh_33.stl"/>
+
+  <xacro:property name="group_right_middle_suspension_mesh_34"  value="package://rover_description/meshes/mesh_34.stl"/>
+  <xacro:property name="group_right_middle_chariot_joint_mesh_35"  value="package://rover_description/meshes/mesh_35.stl"/>
+
+  <xacro:property name="group_right_middle_chariot_center_mesh_36"  value="package://rover_description/meshes/mesh_36.stl"/>
+  <xacro:property name="group_right_middle_chariot_center_wheel_mesh_37"  value="package://rover_description/meshes/mesh_37.stl"/>
+
+  <xacro:property name="group_right_middle_chariot_rear_mesh_38"  value="package://rover_description/meshes/mesh_38.stl"/>
+  <xacro:property name="group_right_middle_chariot_steering_mesh_39"  value="package://rover_description/meshes/mesh_39.stl"/>
+  <xacro:property name="group_right_middle_chariot_wheel_mesh_40"  value="package://rover_description/meshes/mesh_40.stl"/>
+
+
+  <!-- Mesh Path Parameters - Antenna High Gain-->
+  <xacro:property name="antenna_base_mesh_70"  value="package://rover_description/meshes/mesh_70.stl"/>
+  <xacro:property name="antenna_top_mesh_71"  value="package://rover_description/meshes/mesh_71.stl"/>
+
+
+
+  <!-- Misc -->
+  <xacro:property name="encoder_cpr" value="1024"/>  <!-- counts per rev -->
+  <xacro:property name="wheel_inertia" value="0.02"/>
+  <xacro:property name="frame_prefix" value=""/>     <!-- set if you want a prefix for joint/link names -->
+
+
+
+
+  <!-- ========================================================= -->
+  <!-- Base Chassis with Mesh -->
+  <!-- ========================================================= -->
+  <!-- The base link  -  the reference link for the entire model -->
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 ${chassis_height/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${chassis_mesh_0}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${chassis_height/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${chassis_mass}"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1.0" iyy="1.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+
+
+
+  <!-- Head -->
+
+  <joint name="head_base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="head_base_link"/>
+    <origin xyz="0.24 0 0.14" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="head_base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${head_base_mesh_2}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="head_base_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${head_base_mesh_2}"/></geometry>
+    </collision>
+  </link>
+
+
+
+  <joint name="head_top_joint" type="fixed">
+    <parent link="head_base_link"/>
+    <child  link="head_top_link"/>
+    <origin xyz="0 -0.012 0.33" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="head_top_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${head_top_mesh_3}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="head_top_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${head_top_mesh_3}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+
+
+  <!-- Group left -->
+
+  <joint name="group_left_chassis_joint_mesh_10_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="group_left_chassis_joint_mesh_10_link"/>
+    <origin xyz="0 0 0.112" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_chassis_joint_mesh_10_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_chassis_joint_mesh_10}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_chassis_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_chassis_joint_mesh_10}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+  <joint name="roup_left_front_suspension_mesh_11_joint" type="fixed">
+    <parent link="group_left_chassis_joint_mesh_10_link"/>
+    <child  link="group_left_front_suspension_mesh_11_link"/>
+    <origin xyz="0.27 0.2 -0.33" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_front_suspension_mesh_11_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_front_suspension_mesh_11}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_chassis_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_front_suspension_mesh_11}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+
+  <joint name="group_left_front_steering_mesh_12_joint" type="fixed">
+    <parent link="group_left_front_suspension_mesh_11_link"/>
+    <child  link="group_left_front_steering_mesh_12_link"/>
+    <origin xyz="0.135 0.014 -0.105" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_front_steering_mesh_12_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_front_steering_mesh_12}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_front_steering_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_front_steering_mesh_12}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+  <joint name="group_left_front_wheel_mesh_13_joint" type="fixed">
+    <parent link="group_left_front_steering_mesh_12_link"/>
+    <child  link="group_left_front_wheel_mesh_13_link"/>
+    <origin xyz="0 0.07 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_front_wheel_mesh_13_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_front_wheel_mesh_13}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_wheel_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_front_wheel_mesh_13}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+<joint name="group_left_middle_suspension_mesh_14_joint" type="fixed">
+    <parent link="group_left_chassis_joint_mesh_10_link"/>
+    <child  link="group_left_middle_suspension_mesh_14_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_middle_suspension_mesh_14_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_middle_suspension_mesh_14}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_middle_suspension_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_middle_suspension_mesh_14}"/></geometry>
+    </collision>
+  </link>
+
+
+
+<joint name="group_left_middle_chariot_joint_mesh_15_joint" type="fixed">
+    <parent link="group_left_middle_suspension_mesh_14_link"/>
+    <child  link="group_left_middle_chariot_joint_mesh_15_link"/>
+    <origin xyz="-0.175 0.19 -0.32" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_middle_chariot_joint_mesh_15_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_middle_chariot_joint_mesh_15}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_middle_chariot_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_middle_chariot_joint_mesh_15}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+
+<joint name="group_left_middle_chariot_center_mesh_16_joint" type="fixed">
+    <parent link="group_left_middle_chariot_joint_mesh_15_link"/>
+    <child  link="group_left_middle_chariot_center_mesh_16_link"/>
+    <origin xyz="0.045 0 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_middle_chariot_center_mesh_16_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_middle_chariot_center_mesh_16}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_middle_chariot_center_mesh_16}"/></geometry>
+    </collision>
+  </link>
+
+
+
+  <joint name="group_left_middle_chariot_center_wheel_mesh_17_joint" type="fixed">
+    <parent link="group_left_middle_chariot_center_mesh_16_link"/>
+    <child  link="group_left_middle_chariot_center_wheel_mesh_17_link"/>
+    <origin xyz="0.13 0.045 -0.12" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_middle_chariot_center_wheel_mesh_17_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_middle_chariot_center_wheel_mesh_17}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_middle_chariot_center_wheel_mesh_17}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+
+<joint name="group_left_middle_chariot_rear_mesh_18_joint" type="fixed">
+    <parent link="group_left_middle_chariot_joint_mesh_15_link"/>
+    <child  link="group_left_middle_chariot_rear_mesh_18_link"/>
+    <origin xyz="-0.06 -0.004 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_middle_chariot_rear_mesh_18_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_middle_chariot_rear_mesh_18}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_middle_chariot_rear_mesh_18}"/></geometry>
+    </collision>
+  </link>
+
+
+
+<joint name="group_left_middle_chariot_steering_mesh_19_joint" type="fixed">
+    <parent link="group_left_middle_chariot_rear_mesh_18_link"/>
+    <child  link="group_left_middle_chariot_steering_mesh_19_link"/>
+    <origin xyz="-0.125 0.08 -0.08" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_middle_chariot_steering_mesh_19_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_middle_chariot_steering_mesh_19}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_middle_chariot_steering_mesh_19}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+
+<joint name="group_left_middle_chariot_wheel_mesh_20_joint" type="fixed">
+    <parent link="group_left_middle_chariot_steering_mesh_19_link"/>
+    <child  link="group_left_middle_chariot_wheel_mesh_20_link"/>
+    <origin xyz="0.3 -0.29 -0.12" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_left_middle_chariot_wheel_mesh_20_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_left_middle_chariot_wheel_mesh_20}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_left_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_left_middle_chariot_wheel_mesh_20}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+
+
+
+
+
+
+  <!-- Group right -->
+
+  <joint name="group_right_chassis_joint_mesh_30_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="group_right_chassis_joint_mesh_30_link"/>
+    <origin xyz="0 0 0.112" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_chassis_joint_mesh_30_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_chassis_joint_mesh_30}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_chassis_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_chassis_joint_mesh_30}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+  <joint name="roup_right_front_suspension_mesh_31_joint" type="fixed">
+    <parent link="group_right_chassis_joint_mesh_30_link"/>
+    <child  link="group_right_front_suspension_mesh_31_link"/>
+    <origin xyz="0.27 -0.2 -0.33" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_front_suspension_mesh_31_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_front_suspension_mesh_31}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_chassis_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_front_suspension_mesh_31}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+  <joint name="group_right_front_steering_mesh_32_joint" type="fixed">
+    <parent link="group_right_front_suspension_mesh_31_link"/>
+    <child  link="group_right_front_steering_mesh_32_link"/>
+    <origin xyz="-0.325 0.2 -0.2" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_front_steering_mesh_32_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_front_steering_mesh_32}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_steering_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_front_steering_mesh_32}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+ <joint name="group_right_front_wheel_mesh_33_joint" type="fixed">
+    <parent link="group_right_front_steering_mesh_32_link"/>
+    <child  link="group_right_front_wheel_mesh_33_link"/>
+    <origin xyz="0.463 -0.27 0.09" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_front_wheel_mesh_33_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_front_wheel_mesh_33}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_wheel_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_front_wheel_mesh_33}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+
+
+  <joint name="group_right_middle_suspension_mesh_34_joint" type="fixed">
+    <parent link="group_right_chassis_joint_mesh_30_link"/>
+    <child  link="group_right_middle_suspension_mesh_34_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_middle_suspension_mesh_34_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_middle_suspension_mesh_34}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_middle_suspension_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_middle_suspension_mesh_34}"/></geometry>
+    </collision>
+  </link>
+
+
+  <joint name="group_right_middle_chariot_joint_mesh_35_joint" type="fixed">
+    <parent link="group_right_middle_suspension_mesh_34_link"/>
+    <child  link="group_right_middle_chariot_joint_mesh_35_link"/>
+    <origin xyz="-0.175 -0.19 -0.32" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_middle_chariot_joint_mesh_35_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_middle_chariot_joint_mesh_35}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_middle_chariot_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_middle_chariot_joint_mesh_35}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+  <joint name="group_right_middle_chariot_center_mesh_36_joint" type="fixed">
+    <parent link="group_right_middle_chariot_joint_mesh_35_link"/>
+    <child  link="group_right_middle_chariot_center_mesh_36_link"/>
+    <origin xyz="0.045 -0.025 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_middle_chariot_center_mesh_36_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_middle_chariot_center_mesh_36}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_middle_chariot_center_mesh_36}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+  <joint name="group_right_middle_chariot_center_wheel_mesh_37_joint" type="fixed">
+    <parent link="group_right_middle_chariot_center_mesh_36_link"/>
+    <child  link="group_right_middle_chariot_center_wheel_mesh_37_link"/>
+    <origin xyz="0.13 -0.025 -0.12" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_middle_chariot_center_wheel_mesh_37_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_middle_chariot_center_wheel_mesh_37}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_middle_chariot_center_wheel_mesh_37}"/></geometry>
+    </collision>
+  </link>
+
+
+
+  <joint name="group_right_middle_chariot_rear_mesh_38_joint" type="fixed">
+    <parent link="group_right_middle_chariot_joint_mesh_35_link"/>
+    <child  link="group_right_middle_chariot_rear_mesh_38_link"/>
+    <origin xyz="-0.06 0.004 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_middle_chariot_rear_mesh_38_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_middle_chariot_rear_mesh_38}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_middle_chariot_rear_mesh_38}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+  <joint name="group_right_middle_chariot_steering_mesh_39_joint" type="fixed">
+    <parent link="group_right_middle_chariot_rear_mesh_38_link"/>
+    <child  link="group_right_middle_chariot_steering_mesh_39_link"/>
+    <origin xyz="-0.125 -0.08 -0.08" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_middle_chariot_steering_mesh_39_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_middle_chariot_steering_mesh_39}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_middle_chariot_steering_mesh_39}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+  <joint name="group_right_middle_chariot_wheel_mesh_40_joint" type="fixed">
+    <parent link="group_right_middle_chariot_steering_mesh_39_link"/>
+    <child  link="group_right_middle_chariot_wheel_mesh_40_link"/>
+    <origin xyz="0.3 0.29 -0.12" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="group_right_middle_chariot_wheel_mesh_40_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${group_right_middle_chariot_wheel_mesh_40}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="group_right_middle_chariot_center_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${group_right_middle_chariot_wheel_mesh_40}"/></geometry>
+    </collision>
+  </link>
+
+
+  <!-- ========= Transmissions for ros_control (velocity for wheel joints, position for steering) ========= -->
+  <!-- Wheel velocity transmissions (6 wheels) -->
+
+  <transmission name="${frame_prefix}fl_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${frame_prefix}fl_wheel_joint"/>
+    <actuator name="${frame_prefix}fl_wheel_motor"><mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+
+
+
+
+
+
+
+  <!-- ========================================================= -->
+  <!-- Wheels -->
+  <!-- ========================================================= -->
+
+  <!-- Steered and Fixed Wheels -->
+  <xacro:macro name="steered_wheel" params="prefix x y">
+    <link name="${prefix}_steer_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><cylinder length="0.02" radius="0.03"/></geometry>
+        <material name="wheel_steer"/>
+      </visual>
+      <collision>
+        <geometry><cylinder length="0.02" radius="0.03"/></geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_steer_joint" type="revolute">
+      <parent link="base_link"/>
+      <child  link="${prefix}_steer_link"/>
+      <origin xyz="${x} ${y} ${wheel_radius}" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-0.7" upper="0.7" effort="30" velocity="1.0"/>
+    </joint>
+
+    <link name="${prefix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${wheel_mesh}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+        </geometry>
+        <material name="wheel_material"/>
+      </visual>
+      <collision>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <parent link="${prefix}_steer_link"/>
+      <child  link="${prefix}_wheel_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Fixed wheels -->
+  <xacro:macro name="fixed_wheel" params="prefix x y">
+    <link name="${prefix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${wheel_mesh}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+        </geometry>
+        <material name="wheel_material"/>
+      </visual>
+      <collision>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child  link="${prefix}_wheel_link"/>
+      <origin xyz="${x} ${y} ${wheel_radius}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Front, center, and rear wheels -->
+  <xacro:steered_wheel prefix="fl" x="0.35" y="0.25"/>
+  <xacro:fixed_wheel prefix="cl" x="0.00" y="0.00"/>
+  <xacro:steered_wheel prefix="rl" x="-0.35" y="0.25"/>
+
+  <xacro:steered_wheel prefix="fr" x="0.35" y="-0.25"/>
+  <xacro:fixed_wheel prefix="cr" x="-0.35" y="-0.00"/>
+  <xacro:steered_wheel prefix="rr" x="-0.35" y="-0.25"/>
+
+
+
+  <!-- ========================================================= -->
+  <!-- Arm with Meshes -->
+  <!-- ========================================================= -->
+
+  <!-- Arm base link -->
+
+  <joint name="arm_joint1" type="revolute">
+    <parent link="base_link"/>
+    <child  link="arm_base_link"/>
+    <origin xyz="0 0 ${arm_l1}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
+  </joint>
+
+  <link name="arm_base_link">
+    <visual>
+      <origin xyz="0.3 0.1 -0.2" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${arm_l1_mesh_61}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="arm_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${arm_l1_mesh_61}" radius="${arm_radius}"/></geometry>
+    </collision>
+  </link>
+
+  <!-- Arm J2 link -->
+
+  <joint name="arm_l2_mesh_62_joint" type="revolute">
+    <parent link="arm_base_link"/>
+    <child  link="arm_l2_mesh_62_link"/>
+    <origin xyz="0 0 ${arm_l2}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
+  </joint>
+
+  <link name="arm_l2_mesh_62_link">
+    <visual>
+      <origin xyz="0.33 0.065 -0.42" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${arm_l2_mesh_62}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="arm_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${arm_l2_mesh_62}" radius="${arm_radius}"/></geometry>
+    </collision>
+  </link>
+
+  <!-- Arm J3 link -->
+
+ <joint name="arm_l3_mesh_63_joint" type="revolute">
+    <parent link="arm_l2_mesh_62_link"/>
+    <child  link="arm_l3_mesh_63_link"/>
+    <origin xyz="0 0 ${arm_l3}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
+  </joint>
+
+  <link name="arm_l3_mesh_63_link">
+    <visual>
+      <origin xyz="0.33 0.1 -0.615" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${arm_l3_mesh_63}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="arm_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${arm_l3_mesh_63}" radius="${arm_radius}"/></geometry>
+    </collision>
+  </link>
+
+  <!-- Arm J4 link -->
+
+ <joint name="arm_l4_mesh_64_joint" type="revolute">
+    <parent link="arm_l3_mesh_63_link"/>
+    <child  link="arm_l4_mesh_64_link"/>
+    <origin xyz="0 0 ${arm_l4}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
+  </joint>
+
+  <link name="arm_l4_mesh_64_link">
+    <visual>
+      <origin xyz="0.56 0.1 -0.66" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${arm_l4_mesh_64}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="arm_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${arm_l4_mesh_64}" radius="${arm_radius}"/></geometry>
+    </collision>
+  </link>
+
+  <!-- Arm J5 link -->
+
+ <joint name="arm_l5_mesh_65_joint" type="revolute">
+    <parent link="arm_l4_mesh_64_link"/>
+    <child  link="arm_l5_mesh_65_link"/>
+    <origin xyz="0 0 ${arm_l5}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
+  </joint>
+
+  <link name="arm_l5_mesh_65_link">
+    <visual>
+      <origin xyz="0.44 0.09 -0.94" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${arm_l5_mesh_65}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="arm_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${arm_l5_mesh_65}" radius="${arm_radius}"/></geometry>
+    </collision>
+  </link>
+
+
+  <!-- Arm Tools link -->
+
+ <joint name="arm_head_mesh_66_joint" type="revolute">
+    <parent link="arm_l4_mesh_64_link"/>
+    <child  link="arm_head_mesh_66_link"/>
+    <origin xyz="0 0 ${arm_l5}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
+  </joint>
+
+  <link name="arm_head_mesh_66_link">
+    <visual>
+      <origin xyz="0.44 0.05 -0.95" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${arm_head_mesh_66}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="arm_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${arm_head_mesh_66}" radius="${arm_radius}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+
+  <!-- ========================================================= -->
+  <!-- Solar Panels -->
+  <!-- ========================================================= -->
+
+  <!-- Solar Panels Left -->
+
+  <joint name="panel_left_front_mesh_5_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="panel_left_front_mesh_5_link"/>
+    <origin xyz="0.065 0.215 0.03" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="panel_left_front_mesh_5_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${panel_left_front_mesh_5}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="solar_panel_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${panel_left_front_mesh_5}"/></geometry>
+    </collision>
+  </link>
+
+ 
+  <joint name="panel_left_rear_mesh_6_joint" type="fixed">
+    <parent link="panel_left_front_mesh_5_link"/>
+    <child  link="panel_left_rear_mesh_6_link"/>
+    <origin xyz="-0.17 0.25 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="panel_left_rear_mesh_6_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${panel_left_rear_mesh_6}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="solar_panel_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${panel_left_rear_mesh_6}"/></geometry>
+    </collision>
+  </link>
+
+
+  <!-- Solar Panels Right -->
+
+  <joint name="panel_right_front_mesh_7_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="panel_right_front_mesh_7_link"/>
+    <origin xyz="0.08 -0.20 0.03" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="panel_right_front_mesh_7_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${panel_right_front_mesh_7}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="solar_panel_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${panel_right_front_mesh_7}"/></geometry>
+    </collision>
+  </link>
+
+ 
+  <joint name="panel_right_rear_mesh_8_joint" type="fixed">
+    <parent link="panel_right_front_mesh_7_link"/>
+    <child  link="panel_right_rear_mesh_8_link"/>
+    <origin xyz="-0.19 -0.26 0" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="panel_right_rear_mesh_8_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${panel_right_rear_mesh_8}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="solar_panel_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${panel_right_rear_mesh_8}"/></geometry>
+    </collision>
+  </link>
+
+
+  <!-- Solar Panels Center -->
+
+  <joint name="panel_center_rear_mesh_9_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="panel_center_rear_mesh_9_link"/>
+    <origin xyz="-0.32 0 0.045" rpy="0 0 0"/>
+    <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+  </joint>
+
+  <link name="panel_center_rear_mesh_9_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${panel_center_rear_mesh_9}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+      </geometry>
+      <material name="solar_panel_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${panel_center_rear_mesh_9}"/></geometry>
+    </collision>
+  </link>
+
+
+
+
+    <!-- ========================================================= -->
+    <!-- Sensors and additional components -->
+    <!-- ========================================================= -->
+    <!-- Kinect, IMU, GPS and other components are placed similarly -->
+
+
+    <!-- Antenna High Gain -->
+
+    <joint name="antenna_base_mesh_70_joint" type="fixed">
+      <parent link="base_link"/>
+      <child  link="antenna_base_mesh_70_link"/>
+      <origin xyz="-0.24 0.26 0.08" rpy="0 0 0"/>
+      <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+    </joint>
+
+    <link name="antenna_base_mesh_70_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${antenna_base_mesh_70}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+        </geometry>
+        <material name="antenna_base_material"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><mesh filename="${antenna_base_mesh_70}"/></geometry>
+      </collision>
+    </link>
+
+
+
+    <joint name="antenna_top_mesh_71_joint" type="fixed">
+      <parent link="antenna_base_mesh_70_link"/>
+      <child  link="antenna_top_mesh_71_link"/>
+      <origin xyz="0 0.075 0.063" rpy="0 0 0"/>
+      <limit lower="0" upper="0" effort="0" velocity="1.0"/>
+    </joint>
+
+    <link name="antenna_top_mesh_71_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${antenna_top_mesh_71}" scale="${scale_x} ${scale_y} ${scale_z}"/>
+        </geometry>
+        <material name="antenna__hg_material"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><mesh filename="${antenna_top_mesh_71}"/></geometry>
+      </collision>
+    </link>
+
+
+</robot>

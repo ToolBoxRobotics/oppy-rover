@@ -1,0 +1,6 @@
+<launch>
+  <arg name="model" default="$(find rover_description)/urdf/rover_articulated.xacro"/>
+  <param name="rover_description" command="$(find xacro)/xacro $(arg model)"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rover_description)/launch/robot.rviz" required="false"/>
+</launch>

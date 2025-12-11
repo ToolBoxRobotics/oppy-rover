@@ -1,0 +1,17 @@
+<launch>
+  <!-- Start hardware bridges -->
+  <node pkg="rover_base" type="base_bridge.py" name="base_bridge" output="screen"/>
+  <node pkg="rover_arm"  type="arm_bridge.py"  name="arm_bridge"  output="screen"/>
+
+  <!-- Arm helpers -->
+  <node pkg="rover_arm" type="arm_homing_supervisor.py"   name="arm_homing_supervisor"/>
+  <node pkg="rover_arm" type="arm_trajectory_executor.py" name="arm_trajectory_executor"/>
+
+  <!-- Hazard system -->
+  <include file="$(find rover_nav)/launch/hazard_monitor.launch"/>
+
+  <!-- Kinect / camera drivers (OpenNI, libfreenect2, etc.) -->
+  <node pkg="freenect_launch" type="freenect.launch" name="kinect_driver"/> <!-- Example -->
+
+  <!-- Mission Control runs on the PC, not here -->
+</launch>
