@@ -1,11 +1,11 @@
 # oppy-rover
 
-## SBC workspace layout (``oppy_rover_ws_sbc``)
+## SBC workspace layout (``rover_ws``)
 
 On the Raspberry Pi CM4:
 ```bash
-mkdir -p ~/opportunity_rover_ws_sbc/src
-cd ~/opportunity_rover_ws_sbc/src
+mkdir -p ~/rover_ws/src
+cd ~/rover_ws/src
 # clone your repo here
 git clone https://github.com/ToolBoxRobotics/oppy-rover.git .
 cd ..
@@ -14,7 +14,7 @@ catkin_make
 
 ### Directory tree (SBC)
 ```text
-~/opportunity_rover_ws_sbc/
+~/rover_ws/
 ├── CMakeLists.txt          # catkin toplevel
 ├── devel/
 ├── build/
