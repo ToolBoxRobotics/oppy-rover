@@ -141,3 +141,70 @@ Stop Recording
 
 
 
+## Setup Camera Kinect in ROS Noetic
+This guide will walk you through the process of setting up Kinect in ROS Noetic
+
+### Prerequisites
+- Ubuntu 20.04
+```bash
+lsb_release -a  #check ubuntu version
+```
+
+- ROS Noetic installed (installation instructions)
+```bash
+cd /opt/ros && ls #check ros distro
+```
+Kinect for Xbox 360 or Kinect for Windows (Kinect v1)
+
+### Installation
+- Update and upgrade
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+- Install Dependencies
+```bash
+sudo apt install ros-noetic-rgbd-launch
+sudo apt-get install ros-noetic-openni-launch
+sudo apt-get install libfreenect-dev
+```
+
+- Install Freenect
+This package is not available in the official ROS Noetic repositories, so we need to clone the GitHub repository and build it. Follow these steps to do so.
+Clone the package
+```bash
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/src
+git clone https://github.com/ros-drivers/freenect_stack.git
+```
+
+Build Package 
+```bash
+cd ~/catkin_ws
+catkin_make
+source ~/catkin_ws/devel/setup.bash
+```
+
+Run the freenect launch file
+Always source the setup file
+```bash
+source ~/catkin_ws/devel/setup.bash
+```
+
+connect the kinect_v1 to pc
+```bash
+lsusb #list all conected device to pc
+```
+
+Now, we will launch the freenect example for depth registration, which allows you to obtain the point cloud with RGB data superimposed over it.
+roslaunch freenect_launch freenect.launch depth_registration:=true
+visualize the topics from Kinect on Rviz, open a new terminal and launch rviz.
+```bash
+rviz
+```
+
+Now need to setup some parameters on rviz to visualize the depth registration data.
+1. In the ‘Global Options’ set the ‘Fixed Frame’ to ‘camera_link’. 
+2. Add ‘pointcloud2’ object and set the topic to ‘/camera/depth_registered/points’ 
+
