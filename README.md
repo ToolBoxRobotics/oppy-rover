@@ -206,5 +206,16 @@ rviz
 
 Now need to setup some parameters on rviz to visualize the depth registration data.
 1. In the ‘Global Options’ set the ‘Fixed Frame’ to ‘camera_link’. 
-2. Add ‘pointcloud2’ object and set the topic to ‘/camera/depth_registered/points’ 
+2. Add ‘pointcloud2’ object and set the topic to ‘/camera/depth_registered/points’
+
+<img width="331" height="478" alt="image" src="https://github.com/user-attachments/assets/aeea2a97-b4ce-47c3-864e-4b61772fe0d7" />
+
+Now wait for a few seconds to get the points on display!
+
+#### Refrences :
+- https://github.com/Shivam-Kumar-1/ros-noetic-kinectv1-setup 
+- https://aibegins.net/2020/11/22/give-your-next-robot-3d-vision-kinect-v1-with-ros-noetic/
+- http://www.choitek.com/uploads/5/0/8/4/50842795/ros_kinect.pdf
+- http://wiki.ros.org/ROS/Tutorials/CreatingPackage
+- https://naman5.wordpress.com/2014/06/24/experimenting-with-kinect-using-opencv-python-and-open-kinect-libfreenect/
 
